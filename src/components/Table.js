@@ -3,7 +3,9 @@ import MyContext from '../context/MyContext';
 import './table.css';
 
 function Table() {
-  const { data } = useContext(MyContext);
+  const { data, inputFilter } = useContext(MyContext);
+  const { filterByName: { name } } = inputFilter;
+  const nameToFilter = name.toUpperCase();
 
   return (
     <table>
@@ -25,9 +27,10 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.map((planet, index) => {
+        { data.filter((plan) => plan.name.toUpperCase()
+          .includes(nameToFilter)).map((planet, index) => {
           const {
-            name,
+            name: planetName,
             gravity,
             climate,
             diameter,
@@ -44,7 +47,7 @@ function Table() {
 
           return (
             <tr key={ index }>
-              <td>{ name }</td>
+              <td>{ planetName }</td>
               <td>{ rotationPeriod }</td>
               <td>{ orbitalPeriod }</td>
               <td>{ diameter }</td>

@@ -5,6 +5,11 @@ import fetchPlanets from '../services/getPlanets';
 
 function ContextProvider({ children }) {
   const [data, setData] = useState([]);
+  const [inputFilter, setInputFilter] = useState({
+    filterByName: {
+      name: '',
+    },
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -17,6 +22,8 @@ function ContextProvider({ children }) {
   const context = {
     data,
     setData,
+    inputFilter,
+    setInputFilter,
   };
 
   return (
