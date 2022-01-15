@@ -8,8 +8,14 @@ function Header() {
     comparison: 'maior que',
     value: 0,
   });
+  const [optionsAvailable, setOptionsAvailable] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
   const { filterByName: { name } } = inputFilter;
-  // const { column, comparison, value } = filterByNumericValues[0];
 
   const handleFilter = ({ target }) => {
     setInputFilter({
@@ -36,8 +42,8 @@ function Header() {
         value: inputsData.value,
       }],
     });
-
-    console.log(inputsData.value);
+    const newOptions = optionsAvailable.filter((opt) => opt !== inputsData.column);
+    setOptionsAvailable(newOptions);
   };
 
   return (
@@ -55,11 +61,11 @@ function Header() {
         value={ inputsData.column }
         name="column"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          optionsAvailable.map((opt, index) => (
+            <option value={ opt } key={ index }>{ opt }</option>
+          ))
+        }
       </select>
       <select
         data-testid="comparison-filter"
