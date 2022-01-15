@@ -4,8 +4,28 @@ import './table.css';
 
 function Table() {
   const { data, inputFilter } = useContext(MyContext);
-  const { filterByName: { name } } = inputFilter;
+  const { filterByName: { name }, filterByNumericValues } = inputFilter;
+  const { column, comparison, value } = filterByNumericValues[0];
   const nameToFilter = name.toUpperCase();
+
+  const filterByNumber = (planets) => {
+    if (comparison === 'maior que') {
+      const filteredByNumber = planets
+        .filter((plan) => Number(plan[column]) > Number(value));
+      return filteredByNumber;
+    }
+    if (comparison === 'menor que') {
+      const filteredByNumber = planets
+        .filter((plan) => Number(plan[column]) < Number(value));
+      return filteredByNumber;
+    }
+    if (comparison === 'igual a') {
+      const filteredByNumber = planets
+        .filter((plan) => Number(plan[column]) === Number(value));
+      return filteredByNumber;
+    }
+    return planets;
+  };
 
   return (
     <table>
@@ -27,7 +47,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        { data.filter((plan) => plan.name.toUpperCase()
+        { filterByNumber(data).filter((plan) => plan.name.toUpperCase()
           .includes(nameToFilter)).map((planet, index) => {
           const {
             name: planetName,
