@@ -36,7 +36,7 @@ function Header() {
   const handleClick = () => {
     setInputFilter({
       ...inputFilter,
-      filterByNumericValues: [{
+      filterByNumericValues: [...inputFilter.filterByNumericValues, {
         column: inputsData.column,
         comparison: inputsData.comparison,
         value: inputsData.value,
@@ -48,49 +48,63 @@ function Header() {
 
   return (
     <div>
-      <h1>StarWars Planet Search</h1>
-      <input
-        type="text"
-        data-testid="name-filter"
-        onChange={ handleFilter }
-        value={ name }
-      />
-      <select
-        data-testid="column-filter"
-        onChange={ handleSelectFilter }
-        value={ inputsData.column }
-        name="column"
-      >
+      <div>
+        <h1>StarWars Planet Search</h1>
+        <input
+          type="text"
+          data-testid="name-filter"
+          onChange={ handleFilter }
+          value={ name }
+        />
+        <select
+          data-testid="column-filter"
+          onChange={ handleSelectFilter }
+          value={ inputsData.column }
+          name="column"
+        >
+          {
+            optionsAvailable.map((opt, index) => (
+              <option value={ opt } key={ index }>{ opt }</option>
+            ))
+          }
+        </select>
+        <select
+          data-testid="comparison-filter"
+          onChange={ handleSelectFilter }
+          value={ inputsData.comparison }
+          name="comparison"
+        >
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
+        </select>
+        <input
+          type="number"
+          data-testid="value-filter"
+          onChange={ handleSelectFilter }
+          value={ inputsData.value }
+          name="value"
+        />
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ handleClick }
+        >
+          Filtrar
+        </button>
+      </div>
+      <div>
         {
-          optionsAvailable.map((opt, index) => (
-            <option value={ opt } key={ index }>{ opt }</option>
+          inputFilter.filterByNumericValues.map((filter, index) => (
+            <div key={ index }>
+              <span>{ filter.column }</span>
+              <span>{ filter.comparison }</span>
+              <span>{ filter.value }</span>
+              <button type="button" data-testid="filter">X</button>
+            </div>
           ))
         }
-      </select>
-      <select
-        data-testid="comparison-filter"
-        onChange={ handleSelectFilter }
-        value={ inputsData.comparison }
-        name="comparison"
-      >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
-      </select>
-      <input
-        type="number"
-        data-testid="value-filter"
-        onChange={ handleSelectFilter }
-        value={ inputsData.value }
-        name="value"
-      />
-      <button
-        type="button"
-        data-testid="button-filter"
-        onClick={ handleClick }
-      >
-        Filtrar
-      </button>
+      </div>
     </div>
   );
 }

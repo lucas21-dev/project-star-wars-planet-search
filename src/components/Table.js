@@ -5,26 +5,22 @@ import './table.css';
 function Table() {
   const { data, inputFilter } = useContext(MyContext);
   const { filterByName: { name }, filterByNumericValues } = inputFilter;
-  const { column, comparison, value } = filterByNumericValues[0];
   const nameToFilter = name.toUpperCase();
 
-  const filterByNumber = (planets) => {
-    if (comparison === 'maior que') {
-      const filteredByNumber = planets
-        .filter((plan) => Number(plan[column]) > Number(value));
-      return filteredByNumber;
-    }
-    if (comparison === 'menor que') {
-      const filteredByNumber = planets
-        .filter((plan) => Number(plan[column]) < Number(value));
-      return filteredByNumber;
-    }
-    if (comparison === 'igual a') {
-      const filteredByNumber = planets
-        .filter((plan) => Number(plan[column]) === Number(value));
-      return filteredByNumber;
-    }
-    return planets;
+  const filterByNumber = (planet) => {
+    const filteredData = planet.filter((plan) => filterByNumericValues
+      .every(({ column, comparison, value }) => {
+        if (comparison === 'maior que') {
+          return Number(plan[column]) > Number(value);
+        }
+        if (comparison === 'menor que') {
+          return Number(plan[column]) < Number(value);
+        }
+
+        return Number(plan[column]) === Number(value);
+      }));
+
+    return filteredData;
   };
 
   return (

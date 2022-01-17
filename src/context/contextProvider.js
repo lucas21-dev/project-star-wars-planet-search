@@ -10,11 +10,7 @@ function ContextProvider({ children }) {
     filterByName: {
       name: '',
     },
-    filterByNumericValues: [{
-      column: '',
-      comparison: '',
-      value: '',
-    }],
+    filterByNumericValues: [],
   });
 
   useEffect(() => {
