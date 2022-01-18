@@ -5,16 +5,15 @@ import fetchPlanets from '../services/getPlanets';
 
 function ContextProvider({ children }) {
   const [data, setData] = useState([]);
-  // const [firstFetch, setFirstFetch] = useState(true);
   const [inputFilter, setInputFilter] = useState({
     filterByName: {
       name: '',
     },
     filterByNumericValues: [],
-    order: {
-      column: 'name',
-      sort: 'ASC',
-    },
+  });
+  const [sort, setSort] = useState({
+    column: 'name',
+    sortBy: 'ASC',
   });
 
   useEffect(() => {
@@ -30,6 +29,8 @@ function ContextProvider({ children }) {
     setData,
     inputFilter,
     setInputFilter,
+    setSort,
+    sort,
   };
 
   return (

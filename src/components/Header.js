@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import MyContext from '../context/MyContext';
 import ShowFilters from './ShowFilters';
+import SortFilterOptions from './SortFilterOptions';
 
 const defaultOptions = [
   'population',
@@ -109,6 +110,7 @@ function Header() {
         >
           Filtrar
         </button>
+        <SortFilterOptions />
       </div>
       <ShowFilters handleFilter={ handleRemoveFilter } />
     </div>

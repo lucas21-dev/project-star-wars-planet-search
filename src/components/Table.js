@@ -3,9 +3,10 @@ import MyContext from '../context/MyContext';
 import './table.css';
 
 function Table() {
-  const { data, inputFilter } = useContext(MyContext);
+  const { data, inputFilter, sort } = useContext(MyContext);
   const { filterByName: { name }, filterByNumericValues } = inputFilter;
   const nameToFilter = name.toUpperCase();
+  const MINUS_SORT = -1;
 
   const filterByNumber = (planet) => {
     const filteredData = planet.filter((plan) => filterByNumericValues
@@ -19,6 +20,15 @@ function Table() {
 
         return Number(plan[column]) === Number(value);
       }));
+
+    if (sort.column === 'name') {
+      const sortedData = filteredData.sort(
+        (a, b) => (a[sort.column].toLowerCase() > b[sort.column].toLowerCase()
+          ? 1
+          : MINUS_SORT),
+      );
+      return sortedData;
+    }
 
     return filteredData;
   };
@@ -63,7 +73,7 @@ function Table() {
 
           return (
             <tr key={ index }>
-              <td>{ planetName }</td>
+              <td data-testid="planet-name">{ planetName }</td>
               <td>{ rotationPeriod }</td>
               <td>{ orbitalPeriod }</td>
               <td>{ diameter }</td>
